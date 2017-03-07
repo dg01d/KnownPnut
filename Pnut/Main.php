@@ -123,13 +123,13 @@ namespace IdnoPlugins\Pnut {
 			    }
 			    $status .= ': ' . $object->getURL();
 
-			    /* Attachment crosspost not implemented as yet in pnut
+			    /* Attachment crosspost not implemented as yet in pnut */
 			    $attachment_list = []; 
 			    $cross = new \stdClass();
 			    $cross->type = 'io.pnut.core.crosspost';
 			    $cross->value = new \stdClass();
 			    $cross->value->canonical_url = $object->getUrl();
-			    $attachment_list[] = $cross;*/
+			    $attachment_list[] = $cross;
 			    
 			    $entity = new \stdClass();
 			    $entity->text = $status;
