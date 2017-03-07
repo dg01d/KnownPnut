@@ -1,1 +1,1 @@
-<li <?php if ($_SERVER['REQUEST_URI'] == '/account/appnet/') echo 'class="active"'; ?>><a href="/account/appnet/">App.net</a></li>
+<li <?php if ($_SERVER['REQUEST_URI'] == '/account/pnut/') echo 'class="active"'; ?>><a href="/account/pnut/">Pnut</a></li>

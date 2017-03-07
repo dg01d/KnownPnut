@@ -1,7 +1,7 @@
 <div class="row">
 
     <div class="col-md-10 col-md-offset-1">
-        <h1>App.net</h1>
+        <h1>Pnut</h1>
         <?=$this->draw('admin/menu')?>
     </div>
 
