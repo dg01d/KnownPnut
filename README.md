@@ -3,7 +3,7 @@ Pnut.io Support for Known
 
 This plugin provides pnut.io syndication (POSSE) support for Known articles and status updates.
 
-It provides basic status update and post syndication; currently more advanced features (file uploads, starring etc) are not supported. Syndication links (back links & outward links) are not currently working, but the pnutAPI is under active development.
+It provides basic status update and post syndication from your known site; currently more advanced features (file uploads, starring etc) are not supported. Syndication links back from pnut) are not currently working, but links to your pnut post from Known are.
 
 Pull requests welcome!
 
@@ -19,7 +19,7 @@ TODO
 ----
 
 * [ ] Image (and other media) upload via attachments
-* [ ] Outward Syndication Links to created pnut posts
+* [x] Outward Syndication Links to created pnut posts
 * [ ] Backlinks from pnut to known
 
 See
