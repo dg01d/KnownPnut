@@ -1,8 +1,8 @@
 <div class="row">
 
     <div class="col-md-10 col-md-offset-1">
-        <h3>Pnut</h3>
         <?=$this->draw('account/menu')?>
+        <h1>Pnut</h1>
     </div>
 
 </div>
@@ -19,7 +19,7 @@
                                 post to this site can then be cross-posted to your Pnut.io wall.
                             </p>
                             <p>
-                                <a href="<?=$vars['login_url']?>" class="btn btn-large btn-success">Click here to connect Pnut.io to your account</a>
+                                <a href="<?=$vars['login_url']?>" class="tw connect"><i class="fa fa-comment"></i>Connect Pnut.io</a>
                             </p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             </p>
                             <p>
                                 <input type="hidden" name="remove" value="1" />
-                                <button type="submit" class="btn btn-large btn-primary">Click here to remove Pnut.io from your account.</button>
+                                <button type="submit" class="tw connect connected"><i class="fa fa-comment"></i>Disconnect Pnut.io</button>
                             </p>
                         </div>
                     </div>

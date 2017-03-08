@@ -94,9 +94,9 @@ namespace IdnoPlugins\Pnut {
 
 				if ($result['response'] < 400) {
 				    // Success
-				    $link = $content->data->canonical_url; // We don't have a full posse link here, so we have to link to pnut account
-
-				    $object->setPosseLink('pnut', $link);
+				    $id = $content->data->id; 
+				    $user = $content->data->user->username; // Think this gets user id
+				    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
 				    $object->save();
 				} else {
 				    \Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
@@ -152,9 +152,9 @@ namespace IdnoPlugins\Pnut {
 
 			    if ($result['response'] < 400) {
 				// Success
-				$link = $content->data->canonical_url; // We don't have a full posse link here, so we have to link to pnut account
-
-				$object->setPosseLink('pnut', $link);
+			    $id = $content->data->id;               // This gets the post id
+			    $user = $content->data->user->username; // Think this gets user id
+			    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
 				$object->save();
 			    } else {
 				\Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
@@ -229,9 +229,9 @@ namespace IdnoPlugins\Pnut {
 
 				if ($result['response'] < 400) {
 				    // Success
-				    $link = $content->data->canonical_url; // We don't have a full posse link here, so we have to link to pnut account
-
-				    $object->setPosseLink('pnut', $link);
+				    $id = $content->data->id;               // This gets user id
+				    $user = $content->data->user->username; // Think this gets user id
+				    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
 				    $object->save();
 				} else {
 				    \Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
