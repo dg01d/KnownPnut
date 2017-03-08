@@ -82,7 +82,7 @@ namespace IdnoPlugins\Pnut {
 				$entity = new \stdClass();
 				$entity->text = $message;
 				$entity->entities = $this->getEntities($message);
-				$entity->parse_links = true;
+				/* $entity->parse_links = true;     API Difference?    */                    
 				
 				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?access_token=' . $pnutAPI->access_token, json_encode($entity /*[
 					    'text' => $message,
@@ -135,7 +135,7 @@ namespace IdnoPlugins\Pnut {
 			    $entity->text = $status;
 			    $entity->entities = $this->getEntities($status);
 			    $entity->annotations = $attachment_list;
-			    $entity->parse_links = true;
+			    /*$entity->parse_links = true; Differing API?  */
 			    
 			    $result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?access_token=' . $pnutAPI->access_token, json_encode($entity /*[
 					'text' => $status,
