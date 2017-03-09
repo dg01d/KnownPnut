@@ -14,13 +14,20 @@
             ?>
                     <div class="control-group">
                         <div class="controls">
-                            <p>
-                                If you have a Pnut.io account, you may connect it here. Public content that you
-                                post to this site can then be cross-posted to your Pnut.io wall.
-                            </p>
-                            <p>
-                                <a href="<?=$vars['login_url']?>" class="tw connect"><i class="fa fa-comment"></i>Connect Pnut.io</a>
-                            </p>
+
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p>
+                                        If you have a Pnut.io account, you may connect it here. Public content that you
+                                        post to this site can then be cross-posted to your Pnut.io wall.
+                                    </p>
+                                    <div class="social">
+                                        <p>
+                                            <a href="<?=$vars['login_url']?>" class="tw connect"><i class="fa fa-comment"></i>Connect Pnut.io</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 <?php
@@ -30,14 +37,18 @@
                     ?>
                     <div class="control-group">
                         <div class="controls">
-                            <p>
-                                Your account is currently connected to Pnut.io. Public content that you
-                                post to this site can then be cross-posted to your Pnut.io wall.
-                            </p>
-                            <p>
-                                <input type="hidden" name="remove" value="1" />
-                                <button type="submit" class="tw connect connected"><i class="fa fa-comment"></i>Disconnect Pnut.io</button>
-                            </p>
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <p>
+                                        Your account is currently connected to Pnut.io. Public content that you
+                                        post to this site can then be cross-posted to your Pnut.io wall.
+                                    </p>
+                                    <p>
+                                        <input type="hidden" name="remove" value="1" />
+                                        <button type="submit" class="tw connect connected"><i class="fa fa-comment"></i>Disconnect Pnut.io</button>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
