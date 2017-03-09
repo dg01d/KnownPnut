@@ -63,7 +63,7 @@ namespace IdnoPlugins\Pnut {
 	    // Register syndication services
 	    \Idno\Core\site()->syndication()->registerService('pnut', function() {
 		return $this->hasPnut();
-	    }, ['note', 'article']);
+	    }, ['note', 'article', 'image']);
 
 
 	    // Push "notes" to Pnut
@@ -168,7 +168,7 @@ namespace IdnoPlugins\Pnut {
 		}
 	    });
 
-	    // Push "images" to Pnut (NOT IMPLEMENTED YET)
+	    // Push "images" to Pnut
 	    \Idno\Core\site()->addEventHook('post/image/pnut', function(\Idno\Core\Event $event) {
 		$object = $event->data()['object'];
 		if ($attachments = $object->getAttachments()) {
