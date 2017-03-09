@@ -28,11 +28,11 @@
                 </p>
                 <label class="control-label" for="name">Client ID</label>
 
-                    <input type="text" id="name" placeholder="App Key" name="appId" value="<?=htmlspecialchars(\Idno\Core\site()->config()->pnut['appId'])?>" >
+                    <input type="text" id="name" placeholder="App Key" name="appId" class="form-control" value="<?=htmlspecialchars(\Idno\Core\site()->config()->pnut['appId'])?>" >
 
                 <label class="control-label" for="name">Client Secret</label>
 
-                    <input type="text" id="name" placeholder="Secret Key" name="secret" value="<?=htmlspecialchars(\Idno\Core\site()->config()->pnut['secret'])?>" >
+                    <input type="text" id="name" placeholder="Secret Key" name="secret" class="form-control" value="<?=htmlspecialchars(\Idno\Core\site()->config()->pnut['secret'])?>" >
 
             </div>
 
