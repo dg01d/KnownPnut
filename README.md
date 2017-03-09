@@ -3,14 +3,18 @@ Pnut.io Support for Known
 
 This plugin provides pnut.io syndication (POSSE) support for Known articles and status updates.
 
-It provides basic status update and post syndication from your known site; currently more advanced features (file uploads, starring etc) are not supported. Syndication links back from pnut) are not currently working, but links to your pnut post from Known are.
+It provides basic status update and post syndication from your known site; currently more advanced features (file uploads, starring etc) are not supported. Syndication links back from pnut are not currently working, but links to your pnut post from Known are.
 
 Pull requests welcome!
 
 Installation
 ------------
 
-* Drop the Pnut folder into the IndoPlugins folder of your idno installation.
+* Clone the Repository as `Pnut` in your `IdnoPlugins` directory:
+```
+$ cd known/IdnoPlugins
+$ git clone https://github.com/dg01d/KnownPnut.git Pnut
+```
 * Log into known and click on Administration.
 * Click "install" on the plugins page
 * Enter your oauth details, then users will be able to link their accounts
@@ -25,4 +29,4 @@ TODO
 See
 ---
  * Author: Daniel Goldsmith <https://ascraeus.org>
- * Based entirely upon Marcus Povey's [App.Net Plugin](https://github.com/mapkyca/KnownAppNet)
+ * Based upon Marcus Povey's [App.Net Plugin](https://github.com/mapkyca/KnownAppNet)
