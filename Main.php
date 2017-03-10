@@ -123,13 +123,13 @@ namespace IdnoPlugins\Pnut {
 			    if (strlen($status) > 110) { // Trim status down if required
 				$status = substr($status, 0, 106) . ' ...';
 			    }
-			    $statlen = strlen($status);
+			    /*$statlen = strlen($status);
 			    $parse = parse_url($object->getURL());
 			    $domain = $parse['host'];
-			    $domlen = strlen($domain);
-			    $status .= '  [' . $domain . ']';
+			    $domlen = strlen($domain);*/
+			    $stat = '[' . $status . '](' . $object->getURL() . ')';
 
-			    /* Attachment crosspost not implemented as yet in pnut */
+			    /* Attachment crosspost not implemented as yet in pnut 
 			    $attachment_list = []; 
 			    $cross = new \stdClass();
 			    $cross->type = 'links';
@@ -137,12 +137,12 @@ namespace IdnoPlugins\Pnut {
 			    $cross->value->link = $object->getUrl();
 			    $cross->value->text = $status;
 			    $attachment_list[] = $cross;
-			    
+			    */
 			    $entity = new \stdClass();
-			    $entity->text = $status;
+			    $entity->text = $stat; 
 			    /* 
 			    $entity->entities = $this->getEntities($status);
-			    */
+			    
 			    $entity->annotations = $attachment_list;
 			    /*
 			    $entity->parse_links = true; Differing API?  
