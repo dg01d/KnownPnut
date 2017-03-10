@@ -127,7 +127,7 @@ namespace IdnoPlugins\Pnut {
 			    $parse = parse_url($object->getURL());
 			    $domain = $parse['host'];
 			    $domlen = strlen($domain);
-			    $status .= '  [' . $domain . ']'
+			    $status .= '  [' . $domain . ']';
 
 			    /* Attachment crosspost not implemented as yet in pnut */
 			    $attachment_list = []; 
@@ -135,7 +135,7 @@ namespace IdnoPlugins\Pnut {
 			    $cross->type = 'links';
 			    $cross->value = new \stdClass();
 			    $cross->value->link = $object->getUrl();
-			    $cross->value->text = $status
+			    $cross->value->text = $status;
 			    $attachment_list[] = $cross;
 			    
 			    $entity = new \stdClass();
