@@ -123,14 +123,19 @@ namespace IdnoPlugins\Pnut {
 			    if (strlen($status) > 110) { // Trim status down if required
 				$status = substr($status, 0, 106) . ' ...';
 			    }
-			    $status .= ': ' . $object->getURL();
+			    $statlen = strlen($status);
+			    $parse = parse_url($object->getURL());
+			    $domain = $parse['host'];
+			    $domlen = strlen($domain);
+			    $status .= '  [' . $domain . ']'
 
 			    /* Attachment crosspost not implemented as yet in pnut */
 			    $attachment_list = []; 
 			    $cross = new \stdClass();
-			    $cross->type = 'io.pnut.core.crosspost';
+			    $cross->type = 'links';
 			    $cross->value = new \stdClass();
-			    $cross->value->canonical_url = $object->getUrl();
+			    $cross->value->link = $object->getUrl();
+			    $cross->value->text = $status
 			    $attachment_list[] = $cross;
 			    
 			    $entity = new \stdClass();
