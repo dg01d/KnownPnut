@@ -132,7 +132,7 @@ namespace IdnoPlugins\Pnut {
 			    $statlen = strlen($status);
 
 				*/
-			    $article = $status . '[' . $domain . '](' . $object->getURL() . ')';
+			    $article = $status . ' [[' . $domain . '](' . $object->getURL() . ')]';
 
 			    /* Attachment crosspost not implemented as yet in pnut 
 			    $attachment_list = []; 
