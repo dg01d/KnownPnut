@@ -96,7 +96,7 @@ namespace IdnoPlugins\Pnut {
 				    // Success
 				    $id = $content->data->id; 
 				    $user = $content->data->user->username; // Think this gets user id
-				    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
+				    $object->setPosseLink('pnut', 'https://posts.pnut.io/' . $id, '@' . $user, $id, $user);
 				    $object->save();
 				} else {
 				    \Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
@@ -120,14 +120,19 @@ namespace IdnoPlugins\Pnut {
 
 			try {
 			    $status = $object->getTitle();
+			    $parse = parse_url($object->getURL());
+			    $domain = $parse['host'];
+			    $domlen = strlen($domain);
+			    $len = 
+
 			    if (strlen($status) > 110) { // Trim status down if required
 				$status = substr($status, 0, 106) . ' ...';
 			    }
-			    /*$statlen = strlen($status);
-			    $parse = parse_url($object->getURL());
-			    $domain = $parse['host'];
-			    $domlen = strlen($domain);*/
-			    $stat = '[' . $status . '](' . $object->getURL() . ')';
+			    /*
+			    $statlen = strlen($status);
+
+				*/
+			    $article = $status . '[' . $domain . '](' . $object->getURL() . ')';
 
 			    /* Attachment crosspost not implemented as yet in pnut 
 			    $attachment_list = []; 
@@ -139,7 +144,7 @@ namespace IdnoPlugins\Pnut {
 			    $attachment_list[] = $cross;
 			    */
 			    $entity = new \stdClass();
-			    $entity->text = $stat; 
+			    $entity->text = $article; 
 			    /* 
 			    $entity->entities = $this->getEntities($status);
 			    
@@ -159,7 +164,7 @@ namespace IdnoPlugins\Pnut {
 				// Success
 			    $id = $content->data->id;               // This gets the post id
 			    $user = $content->data->user->username; // Think this gets user id
-			    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
+			    $object->setPosseLink('pnut', 'https://posts.pnut.io/' . $id, '@' . $user, $id, $user);
 				$object->save();
 			    } else {
 				\Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
