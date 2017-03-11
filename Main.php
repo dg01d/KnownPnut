@@ -125,8 +125,8 @@ namespace IdnoPlugins\Pnut {
 			    $domlen = strlen($domain);
 			    $len = 
 
-			    if (strlen($status) > 110) { // Trim status down if required
-				$status = substr($status, 0, 106) . ' ...';
+			    if (strlen($status) > 210) { // Trim status down if required
+				$status = substr($status, 0, 206) . ' ...';
 			    }
 			    /*
 			    $statlen = strlen($status);
