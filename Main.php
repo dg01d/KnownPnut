@@ -123,7 +123,7 @@ namespace IdnoPlugins\Pnut {
 			    $parse = parse_url($object->getURL());
 			    $domain = $parse['host'];
 			    $domlen = strlen($domain);
-			    $len = 
+			    
 
 			    if (strlen($status) > 210) { // Trim status down if required
 				$status = substr($status, 0, 206) . ' ...';
