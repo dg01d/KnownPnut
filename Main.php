@@ -120,19 +120,23 @@ namespace IdnoPlugins\Pnut {
 
 			try {
 			    $status = $object->getTitle();
+			    $desc = $object->getDescription();
 			    $parse = parse_url($object->getURL());
 			    $domain = $parse['host'];
-			    $domlen = strlen($domain);
-			    
+			    $domlen = (strlen($domain) + 3);
 
-			    if (strlen($status) > 210) { // Trim status down if required
-				$status = substr($status, 0, 206) . ' ...';
+			    $post = $status . ': ' . $desc;
+			    $boundary = (256 - $domlen);
+			    $cutoff = ($boundary - 4);
+
+			    if (strlen($post) > $boundary) { // Trim status down if required
+				$post = substr($post, 0, $cutoff) . '... ';
 			    }
 			    /*
 			    $statlen = strlen($status);
 
 				*/
-			    $article = $status . ' [[' . $domain . '](' . $object->getURL() . ')]';
+			    $article = $post . ' [[' . $domain . '](' . $object->getURL() . ')]';
 
 			    /* Attachment crosspost not implemented as yet in pnut 
 			    $attachment_list = []; 
