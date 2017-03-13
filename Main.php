@@ -220,7 +220,9 @@ namespace IdnoPlugins\Pnut {
 		    }
 		    	
 
-/*			if (!empty($object->thumbnail_large)) {
+			/* REMOVED FOR FUTURE USE-CASE
+
+			if (!empty($object->thumbnail_large)) {
 			    $src = $object->thumbnail_large;			    
 			}
 			else if (!empty($object->thumbnail_medium)) {
@@ -245,39 +247,14 @@ namespace IdnoPlugins\Pnut {
 			    try {
 
 				$status = $object->getTitle();
-				$status .= ': ' . $object->getURL();
+				$caption = $status . ' [[' . $domain . '](' . $object->getURL() . ')]';
+				
 				
 				$entity = new \stdClass();
-				$entity->text = $status;
+				$entity->text = $caption;
 
 				$entity->raw = $attachment_list;
 				
-				// This is all for the DEBUGGING ONLY
-				/*
-				//API Url
-				$url = 'http://requestb.in/16ekvrw1';
- 
-				//Initiate cURL.
-				$ch = curl_init($url);
-				 
-				//The JSON data.
-				$jsonData = $entity;
-				 
-				//Encode the array into JSON.
-				$jsonDataEncoded = json_encode($jsonData);
-				 
-				//Tell cURL that we want to send a POST request.
-				curl_setopt($ch, CURLOPT_POST, 1);
-				 
-				//Attach our encoded JSON string to the POST fields.
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
-				 
-				//Set the content type to application/json
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
-				 
-				//Execute the request
-				$result = curl_exec($ch);*/
-
 				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_raw=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
 				$content = json_decode($result['content']);
 				
