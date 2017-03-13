@@ -23,7 +23,7 @@
                                     </p>
                                     <div class="social">
                                         <p>
-                                            <a href="<?=$vars['login_url']?>" class="tw connect"><i class="fa fa-comment"></i>Connect Pnut.io</a>
+                                            <a href="<?=$vars['login_url']?>" class="tw connect"><i class="fa fa-ra"></i>Connect Pnut.io</a>
                                         </p>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                     </p>
                                     <p>
                                         <input type="hidden" name="remove" value="1" />
-                                        <button type="submit" class="tw connect connected"><i class="fa fa-comment"></i>Disconnect Pnut.io</button>
+                                        <button type="submit" class="tw connect connected"><i class="fa fa-ra"></i>Disconnect Pnut.io</button>
                                     </p>
                                 </div>
                             </div>

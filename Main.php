@@ -96,7 +96,7 @@ namespace IdnoPlugins\Pnut {
 				    // Success
 				    $id = $content->data->id; 
 				    $user = $content->data->user->username; // Think this gets user id
-				    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
+				    $object->setPosseLink('pnut', 'https://posts.pnut.io/' . $id, '@' . $user, $id, $user);
 				    $object->save();
 				} else {
 				    \Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
@@ -120,24 +120,38 @@ namespace IdnoPlugins\Pnut {
 
 			try {
 			    $status = $object->getTitle();
-			    if (strlen($status) > 110) { // Trim status down if required
-				$status = substr($status, 0, 106) . ' ...';
-			    }
-			    $status .= ': ' . $object->getURL();
+			    $desc = $object->getDescription();
+			    $parse = parse_url($object->getURL());
+			    $domain = $parse['host'];
+			    $domlen = (strlen($domain) + 3);
 
-			    /* Attachment crosspost not implemented as yet in pnut */
+			    $post = $status . ': ' . $desc;
+			    $boundary = (256 - $domlen);
+			    $cutoff = ($boundary - 4);
+
+			    if (strlen($post) > $boundary) { // Trim status down if required
+				$post = substr($post, 0, $cutoff) . '... ';
+			    }
+			    /*
+			    $statlen = strlen($status);
+
+				*/
+			    $article = $post . ' [[' . $domain . '](' . $object->getURL() . ')]';
+
+			    /* Attachment crosspost not implemented as yet in pnut 
 			    $attachment_list = []; 
 			    $cross = new \stdClass();
-			    $cross->type = 'io.pnut.core.crosspost';
+			    $cross->type = 'links';
 			    $cross->value = new \stdClass();
-			    $cross->value->canonical_url = $object->getUrl();
+			    $cross->value->link = $object->getUrl();
+			    $cross->value->text = $status;
 			    $attachment_list[] = $cross;
-			    
+			    */
 			    $entity = new \stdClass();
-			    $entity->text = $status;
+			    $entity->text = $article; 
 			    /* 
 			    $entity->entities = $this->getEntities($status);
-			    */
+			    
 			    $entity->annotations = $attachment_list;
 			    /*
 			    $entity->parse_links = true; Differing API?  
@@ -154,7 +168,7 @@ namespace IdnoPlugins\Pnut {
 				// Success
 			    $id = $content->data->id;               // This gets the post id
 			    $user = $content->data->user->username; // Think this gets user id
-			    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
+			    $object->setPosseLink('pnut', 'https://posts.pnut.io/' . $id, '@' . $user, $id, $user);
 				$object->save();
 			    } else {
 				\Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
