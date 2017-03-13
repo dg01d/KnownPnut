@@ -202,8 +202,8 @@ namespace IdnoPlugins\Pnut {
         if (!empty($attachments)) {
         	foreach ($attachments as $attachment) {
         		// Ok - trying to extract the data
-        		$tmpname = tempnam(sys_get_temp_dir(), 'idnopnut');
-        		list($imgwidth, $imgheight) = getimagesize($tmpname);
+        		
+        		list($imgwidth, $imgheight) = getimagesize($attachment['url']);
 
 				$tmp = new \stdClass();
 				$tmp->type = 'io.pnut.core.oembed';
