@@ -212,7 +212,10 @@ namespace IdnoPlugins\Pnut {
 				$tmp->value->width = $object->width;
 				$tmp->value->height = $object->height;
 				$tmp->value->url = $attachment['url'];
-			
+	
+				$attachment_list[] = $tmp; 
+		    }
+		    	
 
 /*			if (!empty($object->thumbnail_large)) {
 			    $src = $object->thumbnail_large;			    
@@ -231,9 +234,7 @@ namespace IdnoPlugins\Pnut {
 			$tmp->value->thumbnail_url = $src;
 			$tmp->value->thumbnail_width = $width;
 			$tmp->value->thumbnail_height = $height; */	
-				$attachment_list[] = $tmp; 
-		    }
-		    
+				
 		    if ($this->hasPnut()) {
 			if ($pnutAPI = $this->connect()) {
 			    $pnutAPI->setAccessToken(\Idno\Core\site()->session()->currentUser()->pnut['access_token']);
@@ -248,9 +249,12 @@ namespace IdnoPlugins\Pnut {
 
 				$entity->annotations = $attachment_list;
 				
+				$result = \Idno\Core\Webservice::post('http://requestb.in/16ekvrw1'. json_encode($entity), ['Content-Type: application/json']);
+				/*
+
 				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_annotations=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
 				$content = json_decode($result['content']);
-
+				
 				if ($result['response'] < 400) {
 				    // Success
 				    $id = $content->data->id;               // This gets user id
@@ -264,7 +268,7 @@ namespace IdnoPlugins\Pnut {
 				}
 			    } catch (\Exception $e) {
 				\Idno\Core\site()->session()->addMessage('There was a problem posting to PnutIo: ' . $e->getMessage());
-			    }
+			    }*/
 			}
 		    }
 		}
