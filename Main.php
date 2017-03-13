@@ -201,6 +201,9 @@ namespace IdnoPlugins\Pnut {
 
         if (!empty($attachments)) {
         	foreach ($attachments as $attachment) {
+        		// Ok - trying to extract the data
+        		$tmpname = tempnam(sys_get_temp_dir(), 'idnopnut');
+        		list($imgwidth, $imgheight) = getimagesize($tmpname);
 
 				$tmp = new \stdClass();
 				$tmp->type = 'io.pnut.core.oembed';
@@ -209,8 +212,8 @@ namespace IdnoPlugins\Pnut {
 				$tmp->value->type = 'photo';
 				$tmp->value->version = '1.0';
 				$tmp->value->title = '1.0';
-				$tmp->value->width = $object->width;
-				$tmp->value->height = $object->height;
+				$tmp->value->width = $imgwidth;
+				$tmp->value->height = $imgheight;
 				$tmp->value->url = $attachment['url'];
 	
 				$attachment_list[] = $tmp; 
@@ -247,7 +250,9 @@ namespace IdnoPlugins\Pnut {
 				$entity = new \stdClass();
 				$entity->text = $status;
 
-				$entity->annotations = $attachment_list;
+				$entity->raw = $attachment_list;
+				
+				// This is all for the DEBUGGING ONLY
 				//API Url
 				$url = 'http://requestb.in/16ekvrw1';
  
