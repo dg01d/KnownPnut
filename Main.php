@@ -188,11 +188,11 @@ namespace IdnoPlugins\Pnut {
         $object     = $eventdata['object'];
 
        // Let's first try getting the thumbnail
-        if (!empty($object->thumbnail_id)) {
-            if ($thumb = (array)\Idno\Entities\File::getByID($object->thumbnail_id)) {
-                $attachments = array($thumb['file']);
-            }
-        }
+       // if (!empty($object->thumbnail_id)) {
+       //     if ($thumb = (array)\Idno\Entities\File::getByID($object->thumbnail_id)) {
+       //         $attachments = array($thumb['file']);
+       //     }
+       // }
 
         // No? Then we'll use the main event
         if (empty($attachments)) {
@@ -202,21 +202,25 @@ namespace IdnoPlugins\Pnut {
         if (!empty($attachments)) {
         	foreach ($attachments as $attachment) {
 
-			$tmp = new \stdClass();
-			$tmp->type = 'io.pnut.core.oembed';
-			$tmp->value = new \stdClass();
+				$tmp = new \stdClass();
+				$tmp->type = 'io.pnut.core.oembed';
+				$tmp->value = new \stdClass();
 
-			$tmp->value->type = 'photo';
-			$tmp->value->version = '1.0';
-			$tmp->value->title = '1.0';
-			$tmp->value->width = $object->width;
-			$tmp->value->height = $object->height;
-			$tmp->value->url = $attachment['url'];
+				$tmp->value->type = 'photo';
+				$tmp->value->version = '1.0';
+				$tmp->value->title = '1.0';
+				$tmp->value->width = $object->width;
+				$tmp->value->height = $object->height;
+				$tmp->value->url = $attachment['url'];
 			
 
-			if (!empty($object->thumbnail_large)) {
+/*			if (!empty($object->thumbnail_large)) {
 			    $src = $object->thumbnail_large;			    
-			} else if (!empty($object->small)) { 
+			}
+			else if (!empty($object->thumbnail_medium)) {
+			    $src = $object->thumbnail_medium;			    
+			} 
+			 else if (!empty($object->small)) { 
 			    $src = $object->thumbnail_small;
 			} else if (!empty($object->thumbnail)) { // Backwards compatibility
 			    $src = $object->thumbnail;
@@ -226,9 +230,8 @@ namespace IdnoPlugins\Pnut {
 
 			$tmp->value->thumbnail_url = $src;
 			$tmp->value->thumbnail_width = $width;
-			$tmp->value->thumbnail_height = $height;
-			
-			$attachment_list[] = $tmp;
+			$tmp->value->thumbnail_height = $height; */	
+				$attachment_list[] = $tmp; 
 		    }
 		    
 		    if ($this->hasPnut()) {
