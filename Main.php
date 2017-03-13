@@ -184,15 +184,25 @@ namespace IdnoPlugins\Pnut {
 
 	    // Push "images" to Pnut
 	    \Idno\Core\site()->addEventHook('post/image/pnut', function(\Idno\Core\Event $event) {
-		$object = $event->data()['object'];
-		if ($attachments = $object->getAttachments()) {
+		$eventdata = $event->data();
+        $object     = $eventdata['object'];
 
-		    $attachment_list = [];
+       // Let's first try getting the thumbnail
+        if (!empty($object->thumbnail_id)) {
+            if ($thumb = (array)\Idno\Entities\File::getByID($object->thumbnail_id)) {
+                $attachments = array($thumb['file']);
+            }
+        }
 
-		    foreach ($attachments as $attachment) {
+        // No? Then we'll use the main event
+        if (empty($attachments)) {
+            $attachments = $object->getAttachments();
+        }
+
+        if (!empty($attachments)) {
+        	foreach ($attachments as $attachment) {
 
 			$tmp = new \stdClass();
-
 			$tmp->type = 'io.pnut.core.oembed';
 			$tmp->value = new \stdClass();
 
@@ -225,7 +235,6 @@ namespace IdnoPlugins\Pnut {
 			if ($pnutAPI = $this->connect()) {
 			    $pnutAPI->setAccessToken(\Idno\Core\site()->session()->currentUser()->pnut['access_token']);
 
-
 			    try {
 
 				$status = $object->getTitle();
@@ -233,9 +242,7 @@ namespace IdnoPlugins\Pnut {
 				
 				$entity = new \stdClass();
 				$entity->text = $status;
-				/*
-				$entity->entities = $this->getEntities($status);
-				*/
+
 				$entity->annotations = $attachment_list;
 				
 				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_annotations=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
