@@ -253,6 +253,7 @@ namespace IdnoPlugins\Pnut {
 				$entity->raw = $attachment_list;
 				
 				// This is all for the DEBUGGING ONLY
+				/*
 				//API Url
 				$url = 'http://requestb.in/16ekvrw1';
  
@@ -275,11 +276,9 @@ namespace IdnoPlugins\Pnut {
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
 				 
 				//Execute the request
-				$result = curl_exec($ch);
+				$result = curl_exec($ch);*/
 
-
-				//$result = \Idno\Core\Webservice::post('http://requestb.in/16ekvrw1&'. json_encode($entity));
-				//$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_annotations=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
+				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_raw=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
 				$content = json_decode($result['content']);
 				
 				if ($result['response'] < 400) {
