@@ -248,7 +248,32 @@ namespace IdnoPlugins\Pnut {
 				$entity->text = $status;
 
 				$entity->annotations = $attachment_list;
-				$result = \Idno\Core\Webservice::post('http://requestb.in/16ekvrw1?include_annotations=1&'. json_encode($entity));
+				//API Url
+				$url = 'http://requestb.in/16ekvrw1';
+ 
+				//Initiate cURL.
+				$ch = curl_init($url);
+				 
+				//The JSON data.
+				$jsonData = $entity;
+				 
+				//Encode the array into JSON.
+				$jsonDataEncoded = json_encode($jsonData);
+				 
+				//Tell cURL that we want to send a POST request.
+				curl_setopt($ch, CURLOPT_POST, 1);
+				 
+				//Attach our encoded JSON string to the POST fields.
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonDataEncoded);
+				 
+				//Set the content type to application/json
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); 
+				 
+				//Execute the request
+				$result = curl_exec($ch);
+
+
+				//$result = \Idno\Core\Webservice::post('http://requestb.in/16ekvrw1&'. json_encode($entity));
 				//$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_annotations=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
 				$content = json_decode($result['content']);
 				
