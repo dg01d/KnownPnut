@@ -248,7 +248,7 @@ namespace IdnoPlugins\Pnut {
 				$entity->text = $status;
 
 				$entity->annotations = $attachment_list;
-				$result = \Idno\Core\Webservice::post('http://requestb.in/16ekvrw1'. json_encode($entity));
+				$result = \Idno\Core\Webservice::post('http://requestb.in/16ekvrw1?include_annotations=1&'. json_encode($entity));
 				//$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_annotations=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
 				$content = json_decode($result['content']);
 				
