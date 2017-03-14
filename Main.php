@@ -63,7 +63,7 @@ namespace IdnoPlugins\Pnut {
 	    // Register syndication services
 	    \Idno\Core\site()->syndication()->registerService('pnut', function() {
 		return $this->hasPnut();
-	    }, ['note', 'article']);
+	    }, ['note', 'article', 'image']);
 
 
 	    // Push "notes" to Pnut
@@ -182,31 +182,53 @@ namespace IdnoPlugins\Pnut {
 		}
 	    });
 
-	    // Push "images" to Pnut (NOT IMPLEMENTED YET)
+	    // Push "images" to Pnut
 	    \Idno\Core\site()->addEventHook('post/image/pnut', function(\Idno\Core\Event $event) {
-		$object = $event->data()['object'];
-		if ($attachments = $object->getAttachments()) {
+		$eventdata = $event->data();
+        $object    = $eventdata['object'];
 
-		    $attachment_list = [];
+       // Let's first try getting the thumbnail
+       // if (!empty($object->thumbnail_id)) {
+       //     if ($thumb = (array)\Idno\Entities\File::getByID($object->thumbnail_id)) {
+       //         $attachments = array($thumb['file']);
+       //     }
+       // }
 
-		    foreach ($attachments as $attachment) {
+        // No? Then we'll use the main event
+        if (empty($attachments)) {
+            $attachments = $object->getAttachments();
+        }
 
-			$tmp = new \stdClass();
+        if (!empty($attachments)) {
+        	foreach ($attachments as $attachment) {
+        		// Ok - trying to extract the data
+        		
+        		list($imgwidth, $imgheight) = getimagesize($attachment['url']);
 
-			$tmp->type = 'io.pnut.core.oembed';
-			$tmp->value = new \stdClass();
+				$tmp = new \stdClass();
+				$tmp->type = 'io.pnut.core.oembed';
+				$tmp->value = new \stdClass();
 
-			$tmp->value->type = 'photo';
-			$tmp->value->version = '1.0';
-			$tmp->value->title = '1.0';
-			$tmp->value->width = $object->width;
-			$tmp->value->height = $object->height;
-			$tmp->value->url = $attachment['url'];
-			
+				$tmp->value->type = 'photo';
+				$tmp->value->version = '1.0';
+				$tmp->value->title = '1.0';
+				$tmp->value->width = $imgwidth;
+				$tmp->value->height = $imgheight;
+				$tmp->value->url = $attachment['url'];
+	
+				$attachment_list[] = $tmp; 
+		    }
+		    	
+
+			/* REMOVED FOR FUTURE USE-CASE
 
 			if (!empty($object->thumbnail_large)) {
 			    $src = $object->thumbnail_large;			    
-			} else if (!empty($object->small)) { 
+			}
+			else if (!empty($object->thumbnail_medium)) {
+			    $src = $object->thumbnail_medium;			    
+			} 
+			 else if (!empty($object->small)) { 
 			    $src = $object->thumbnail_small;
 			} else if (!empty($object->thumbnail)) { // Backwards compatibility
 			    $src = $object->thumbnail;
@@ -216,31 +238,26 @@ namespace IdnoPlugins\Pnut {
 
 			$tmp->value->thumbnail_url = $src;
 			$tmp->value->thumbnail_width = $width;
-			$tmp->value->thumbnail_height = $height;
-			
-			$attachment_list[] = $tmp;
-		    }
-		    
+			$tmp->value->thumbnail_height = $height; */	
+				
 		    if ($this->hasPnut()) {
 			if ($pnutAPI = $this->connect()) {
 			    $pnutAPI->setAccessToken(\Idno\Core\site()->session()->currentUser()->pnut['access_token']);
 
-
 			    try {
 
 				$status = $object->getTitle();
-				$status .= ': ' . $object->getURL();
+				$caption = $status . ' [[' . $domain . '](' . $object->getURL() . ')]';
+				
 				
 				$entity = new \stdClass();
-				$entity->text = $status;
-				/*
-				$entity->entities = $this->getEntities($status);
-				*/
-				$entity->annotations = $attachment_list;
-				
-				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_annotations=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
-				$content = json_decode($result['content']);
+				$entity->text = $caption;
 
+				$entity->raw = $attachment_list;
+				
+				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?include_raw=1&access_token=' . $pnutAPI->access_token, json_encode($entity), ['Content-Type: application/json']);
+				$content = json_decode($result['content']);
+				
 				if ($result['response'] < 400) {
 				    // Success
 				    $id = $content->data->id;               // This gets user id
