@@ -63,7 +63,7 @@ namespace IdnoPlugins\Pnut {
 	    // Register syndication services
 	    \Idno\Core\site()->syndication()->registerService('pnut', function() {
 		return $this->hasPnut();
-	    }, ['note', 'article', 'image', 'rsvp', 'bookmark']);
+	    }, array('note', 'article', 'image', 'rsvp', 'bookmark', 'share', 'like'));
 
 
 	    // Push "notes" to Pnut
@@ -80,11 +80,7 @@ namespace IdnoPlugins\Pnut {
 			    try {
 
 				$entity = new \stdClass();
-				$entity->text = $message;
-				/* Per @33mhz, Pnut doesn't need this. 
-				$entity->entities = $this->getEntities($message); 
-				$entity->parse_links = true;     
-				*/                  
+				$entity->text = $message;                
 				
 				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?access_token=' . $pnutAPI->access_token, json_encode($entity /*[
 					    'text' => $message,
@@ -132,10 +128,7 @@ namespace IdnoPlugins\Pnut {
 			    if (strlen($post) > $boundary) { // Trim status down if required
 				$post = substr($post, 0, $cutoff) . '... ';
 			    }
-			    /*
-			    $statlen = strlen($status);
-
-				*/
+			    
 			    $article = $post . ' [[' . $domain . '](' . $object->getURL() . ')]';
 
 			    /* Attachment crosspost not implemented as yet in pnut 
@@ -149,18 +142,11 @@ namespace IdnoPlugins\Pnut {
 			    */
 			    $entity = new \stdClass();
 			    $entity->text = $article; 
-			    /* 
-			    $entity->entities = $this->getEntities($status);
-			    
-			    $entity->annotations = $attachment_list;
-			    /*
-			    $entity->parse_links = true; Differing API?  
-			    */
 			    
 			    $result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?access_token=' . $pnutAPI->access_token, json_encode($entity /*[
 					'text' => $status,
 					'entities' => $this->getEntities($status),
-					'attachments' => $attachment_list // Well, I'm sending this as an attachment, but it doesn't seem to do anything...
+					'attachments' => $attachment_list 
 			    ]*/), ['Content-Type: application/json']);
 			    $content = json_decode($result['content']);
 
