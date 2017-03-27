@@ -180,7 +180,7 @@ namespace IdnoPlugins\Pnut {
 			}
 		    }
 		}
-	    });
+	    };
 
         // Push "articles" "bookmarks" and "rsvps" to Pnut
         \Idno\Core\Idno::site()->addEventHook('post/article/pnut', $article_handler);
