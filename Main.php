@@ -120,7 +120,7 @@ namespace IdnoPlugins\Pnut {
 
 			try {
 			    $status = $object->getTitle();
-			    $desc = $object->getDescription();
+			    $desc = html_entity_decode(strip_tags($object->getDescription()));
 			    $parse = parse_url($object->getURL());
 			    $domain = $parse['host'];
 			    $domlen = (strlen($domain) + 3);
