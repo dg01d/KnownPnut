@@ -120,7 +120,7 @@ namespace IdnoPlugins\Pnut {
 
 			try {
 			    $status = $object->getTitle();
-			    $desc = $object->getDescription();
+			    $desc = html_entity_decode(strip_tags($object->getDescription()));
 			    $parse = parse_url($object->getURL());
 			    $domain = $parse['host'];
 			    $domlen = (strlen($domain) + 3);
@@ -262,7 +262,7 @@ namespace IdnoPlugins\Pnut {
 				    // Success
 				    $id = $content->data->id;               // This gets user id
 				    $user = $content->data->user->username; // Think this gets user id
-				    $object->setPosseLink('pnut', 'https://pnut.io/@' . $user . '/' . $id, '@' . $user, $id, $user);
+				    $object->setPosseLink('pnut', 'https://posts.pnut.io/' . $id, '@' . $user, $id, $user);
 				    $object->save();
 				} else {
 				    \Idno\Core\site()->logging->log("PnutIo Syndication: " . $content->meta->error_message, LOGLEVEL_ERROR);
