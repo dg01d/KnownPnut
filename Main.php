@@ -86,12 +86,12 @@ namespace IdnoPlugins\Pnut {
 				$entity->parse_links = true;     
 				*/
 
-				$attachment_list = []; 
+				$attachment_list = [];
 				$cross = new \stdClass();
 				$cross->type = 'io.pnut.core.crosspost';
 				$cross->value = new \stdClass();
-				$cross->value->link = $object->getUrl();
-				$cross->value->text = $status;
+				$cross->value->canonical_url = $object->getUrl();
+				//$cross->value->text = $status;
 				$attachment_list[] = $cross;
 				$entity->raw = $attachment_list;
 
@@ -152,8 +152,7 @@ namespace IdnoPlugins\Pnut {
 			    $cross = new \stdClass();
 			    $cross->type = 'io.pnut.core.crosspost';
 			    $cross->value = new \stdClass();
-			    $cross->value->link = $object->getUrl();
-			    $cross->value->text = $status;
+			    $cross->value->canonical_url = $object->getUrl();
 			    $attachment_list[] = $cross;
 			    /**/
 			    $entity = new \stdClass();
@@ -266,8 +265,7 @@ namespace IdnoPlugins\Pnut {
 				$cross = new \stdClass();
 				$cross->type = 'io.pnut.core.crosspost';
 				$cross->value = new \stdClass();
-				$cross->value->link = $object->getUrl();
-				$cross->value->text = $status;
+				$cross->value->canonical_url = $object->getUrl();
 				$attachment_list[] = $cross;
 
 				$entity->raw = $attachment_list;
