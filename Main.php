@@ -84,8 +84,17 @@ namespace IdnoPlugins\Pnut {
 				/* Per @33mhz, Pnut doesn't need this. 
 				$entity->entities = $this->getEntities($message); 
 				$entity->parse_links = true;     
-				*/                  
-				
+				*/
+
+				$attachment_list = []; 
+				$cross = new \stdClass();
+				$cross->type = 'io.pnut.core.crosspost';
+				$cross->value = new \stdClass();
+				$cross->value->link = $object->getUrl();
+				$cross->value->text = $status;
+				$attachment_list[] = $cross;
+				$entity->raw = $attachment_list;
+
 				$result = \Idno\Core\Webservice::post('https://api.pnut.io/v0/posts?access_token=' . $pnutAPI->access_token, json_encode($entity /*[
 					    'text' => $message,
 					    'entities' => $this->getEntities($message)
@@ -138,21 +147,21 @@ namespace IdnoPlugins\Pnut {
 				*/
 			    $article = $post . ' [[' . $domain . '](' . $object->getURL() . ')]';
 
-			    /* Attachment crosspost not implemented as yet in pnut 
+			    /* Attachment crosspost for pnut as used by patter */ 
 			    $attachment_list = []; 
 			    $cross = new \stdClass();
-			    $cross->type = 'links';
+			    $cross->type = 'io.pnut.core.crosspost';
 			    $cross->value = new \stdClass();
 			    $cross->value->link = $object->getUrl();
 			    $cross->value->text = $status;
 			    $attachment_list[] = $cross;
-			    */
+			    /**/
 			    $entity = new \stdClass();
 			    $entity->text = $article; 
 			    /* 
 			    $entity->entities = $this->getEntities($status);
-			    
-			    $entity->annotations = $attachment_list;
+			    */
+			    $entity->raw = $attachment_list;
 			    /*
 			    $entity->parse_links = true; Differing API?  
 			    */
@@ -252,6 +261,14 @@ namespace IdnoPlugins\Pnut {
 				
 				$entity = new \stdClass();
 				$entity->text = $caption;
+
+				// $attachment_list = []; 
+				$cross = new \stdClass();
+				$cross->type = 'io.pnut.core.crosspost';
+				$cross->value = new \stdClass();
+				$cross->value->link = $object->getUrl();
+				$cross->value->text = $status;
+				$attachment_list[] = $cross;
 
 				$entity->raw = $attachment_list;
 				
