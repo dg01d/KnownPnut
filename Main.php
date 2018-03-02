@@ -7,15 +7,18 @@ namespace IdnoPlugins\Pnut {
 	    public static $AUTHORIZATION_ENDPOINT = 'https://pnut.io/oauth/authenticate';
 	    public static $TOKEN_ENDPOINT = 'https://api.pnut.io/v0/oauth/access_token';
 
-	    public static function getRedirectUrl() {
+	    public static function getRedirectUrl()
+	    {
 	        return \Idno\Core\site()->config()->url . 'pnut/callback';
 	    }
 
-	    public static function getState() {
+	    public static function getState()
+	    {
 	        return md5(\Idno\Core\site()->config()->site_secret . \Idno\Core\site()->config()->url . dirname(__FILE__));
 	    }
 
-	    function registerPages() {
+	    function registerPages()
+	    {
 	        // Register the callback URL
 	        \Idno\Core\site()->addPageHandler('pnut/callback', '\IdnoPlugins\Pnut\Pages\Callback');
 	        // Register admin settings
@@ -29,7 +32,8 @@ namespace IdnoPlugins\Pnut {
 	        \Idno\Core\site()->template()->extendTemplate('account/menu/items', 'account/pnut/menu');
 	    }
 
-	    function registerEventHooks() {
+	    function registerEventHooks()
+	    {
 
 	        // Register syndication services
 	        \Idno\Core\site()->syndication()->registerService('pnut', function() {
@@ -272,7 +276,8 @@ namespace IdnoPlugins\Pnut {
 	     * Connect to PnutIo
 	     * @return bool|\IdnoPlugins\Pnut\Client
 	     */
-	    function connect() {
+	    function connect()
+	    {
 	        if (!empty(\Idno\Core\site()->config()->pnut)) {
 		        $api = new Client(
 		            \Idno\Core\site()->config()->pnut['appId'], \Idno\Core\site()->config()->pnut['secret']
@@ -286,7 +291,8 @@ namespace IdnoPlugins\Pnut {
 	     * Can the current user use Pnut?
 	     * @return bool
 	     */
-	    function hasPnut() {
+	    function hasPnut()
+	    {
 	        if (\Idno\Core\site()->session()->currentUser()->pnut) {
 	        	return true;
 	        }
