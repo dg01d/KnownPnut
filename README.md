@@ -24,9 +24,9 @@ TODO
 
 * [x] Outward Syndication Links to created pnut posts
 * [x] Backlinks from pnut to known
-* [X] Image posts to pnut 
+* [X] Image posts to pnut
+* [X] Replies to pnut posts/threads
 * [ ] Other media upload
-* [ ] Replies to pnut posts/threads
 * [ ] Stars/faves of pnut posts/threads
 
 See
